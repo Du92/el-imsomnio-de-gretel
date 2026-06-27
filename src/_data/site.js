@@ -5,8 +5,8 @@ module.exports = {
     "Crónicas, literatura, memoria y voces que escriben cuando la ciudad duerme.",
   author: "Duvier Suárez Fontanella y Gretel Quintero Angulo",
   language: "es",
-  url: "https://tu-usuario.github.io",
-  pathPrefix: "/tu-repositorio/",
+  url: "https://du92.github.io",
+  pathPrefix: "/el-imsomnio-de-gretel/",
   social: {
     x: "https://x.com/",
     facebook: "https://www.facebook.com/",
