@@ -1,0 +1,23 @@
+---
+title: "A-Z"
+description: "Índice alfabético de todas las entradas publicadas."
+permalink: /a-z/
+---
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+  <section class="archive-hero shell shell--narrow">
+    <p class="eyebrow">Índice</p>
+    <h1>A-Z</h1>
+    <p>Todos los textos publicados, ordenados alfabéticamente.</p>
+  </section>
+
+  <section class="alphabetical-index shell shell--reading" aria-label="Índice de artículos">
+    {% for post in collections.posts | sortByTitle %}
+      <article class="alphabetical-index__item">
+        <h2><a href="{{ post.url | url }}">{{ post.data.title }}</a></h2>
+        <p>{{ post.data.author }} <span aria-hidden="true">—</span> {{ post.data.date | formatDate }} <span aria-hidden="true">—</span> <a href="{{ ('/' + post.data.category + '/') | url }}">{{ post.data.category | categoryLabel }}</a></p>
+      </article>
+    {% endfor %}
+  </section>
+{% endblock %}

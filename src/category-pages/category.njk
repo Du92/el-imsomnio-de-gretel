@@ -1,0 +1,25 @@
+---
+pagination:
+  data: categories.items
+  size: 1
+  alias: category
+permalink: "{{ category.slug }}/index.html"
+---
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+  <section class="archive-hero shell shell--narrow">
+    <p class="eyebrow">Categoría</p>
+    <h1>{{ category.label }}</h1>
+    <p>{{ category.description }}</p>
+  </section>
+
+  <section class="post-grid shell" aria-label="Entradas de {{ category.label }}">
+    {% set categoryPosts = collections.posts | byCategory(category.slug) %}
+    {% for post in categoryPosts %}
+      {% include "components/post-card.njk" %}
+    {% else %}
+      <p class="empty-state">Todavía no hay entradas publicadas en esta categoría.</p>
+    {% endfor %}
+  </section>
+{% endblock %}

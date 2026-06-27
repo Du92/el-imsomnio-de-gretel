@@ -1,0 +1,25 @@
+---
+pagination:
+  data: seriesList.items
+  size: 1
+  alias: seriesEntry
+permalink: "series/{{ seriesEntry.slug }}/index.html"
+---
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+  <section class="archive-hero shell shell--narrow">
+    <p class="eyebrow">Serie</p>
+    <h1>{{ seriesEntry.name }}</h1>
+    <p>{{ seriesEntry.description }}</p>
+  </section>
+
+  <section class="post-grid shell" aria-label="Entradas de la serie {{ seriesEntry.name }}">
+    {% set seriesPosts = collections.posts | bySeries(seriesEntry.name) %}
+    {% for post in seriesPosts %}
+      {% include "components/post-card.njk" %}
+    {% else %}
+      <p class="empty-state">Todavía no hay entradas publicadas en esta serie.</p>
+    {% endfor %}
+  </section>
+{% endblock %}

@@ -1,0 +1,16 @@
+---
+title: "Página no encontrada"
+description: "La página que buscas no está disponible."
+permalink: /404.html
+eleventyExcludeFromCollections: true
+---
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+  <section class="not-found shell shell--narrow">
+    <p class="eyebrow">404</p>
+    <h1>Esta página se quedó despierta en otra parte.</h1>
+    <p>No hemos encontrado la ruta que buscabas. Puede que el texto se haya movido, que el enlace haya cambiado o que nunca haya existido.</p>
+    <a class="text-link" href="{{ '/' | url }}">← Volver al inicio</a>
+  </section>
+{% endblock %}

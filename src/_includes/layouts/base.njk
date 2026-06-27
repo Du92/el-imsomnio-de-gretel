@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="{{ site.language | default('es') }}">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f8f7f4" />
+    <title>{% if title %}{{ title }} · {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{{ description or site.description }}" />
+    <link rel="canonical" href="{{ page.url | absoluteUrl(site) }}" />
+    <link rel="icon" type="image/svg+xml" href="{{ '/favicon.svg' | url }}" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:type" content="{% if layout == 'layouts/article.njk' %}article{% else %}website{% endif %}" />
+    <meta property="og:title" content="{% if title %}{{ title }} · {% endif %}{{ site.title }}" />
+    <meta property="og:description" content="{{ description or site.description }}" />
+    <meta property="og:url" content="{{ page.url | absoluteUrl(site) }}" />
+    <meta property="og:site_name" content="{{ site.title }}" />
+    {% if cover %}<meta property="og:image" content="{{ cover | absoluteUrl(site) }}" />{% endif %}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{% if title %}{{ title }} · {% endif %}{{ site.title }}" />
+    <meta name="twitter:description" content="{{ description or site.description }}" />
+    {% if cover %}<meta name="twitter:image" content="{{ cover | absoluteUrl(site) }}" />{% endif %}
+    <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | url }}" />
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | url }}" />
+    <script defer src="{{ '/assets/js/menu.js' | url }}"></script>
+  </head>
+  <body>
+    {% include "partials/header.njk" %}
+    <main id="contenido" tabindex="-1">
+      {% block content %}{% endblock %}
+    </main>
+    {% include "partials/footer.njk" %}
+  </body>
+</html>

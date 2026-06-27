@@ -1,0 +1,21 @@
+{% set currentCategory = activeCategory or (category.slug or category) %}
+<header class="site-header">
+  <div class="site-header__rule" aria-hidden="true"></div>
+  <div class="site-header__inner shell">
+    <a class="brand" href="{{ '/' | url }}" aria-label="Ir a inicio: El insomnio de Gretel">
+      <img src="{{ '/assets/icons/insomnia-logo.svg' | url }}" alt="Insomnia" width="102" height="102" />
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="menu-toggle__label">Menú</span>
+      <span class="menu-toggle__icon" aria-hidden="true"></span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Navegación principal">
+      <a class="skip-link" href="#contenido">Saltar al contenido</a>
+      {% for item in site.navigation %}
+        {% set isActive = (item.url == '/' and page.url == '/') or (item.category and item.category == currentCategory) or (item.url == page.url) %}
+        <a href="{{ item.url | url }}"{% if isActive %} aria-current="page"{% endif %}>{{ item.label }}</a>
+      {% endfor %}
+      <a class="site-nav__rss" href="{{ '/feed.xml' | url }}" aria-label="Suscribirse al RSS">RSS</a>
+    </nav>
+  </div>
+</header>

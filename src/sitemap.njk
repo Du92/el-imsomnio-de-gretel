@@ -1,0 +1,22 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>{{ '/' | absoluteUrl(site) }}</loc></url>
+  <url><loc>{{ '/sobre-nosotros/' | absoluteUrl(site) }}</loc></url>
+  <url><loc>{{ '/a-z/' | absoluteUrl(site) }}</loc></url>
+{% for category in categories.items %}
+  <url><loc>{{ ('/' + category.slug + '/') | absoluteUrl(site) }}</loc></url>
+{% endfor %}
+{% for seriesEntry in seriesList.items %}
+  <url><loc>{{ ('/series/' + seriesEntry.slug + '/') | absoluteUrl(site) }}</loc></url>
+{% endfor %}
+{% for post in collections.posts %}
+  <url>
+    <loc>{{ post.url | absoluteUrl(site) }}</loc>
+    <lastmod>{{ post.date | isoDate }}</lastmod>
+  </url>
+{% endfor %}
+</urlset>

@@ -1,0 +1,81 @@
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+  <article class="article">
+    <header class="article__header shell shell--narrow">
+      <p class="eyebrow">{{ category | categoryLabel }}</p>
+      <h1>{{ title }}</h1>
+      {% if subtitle %}<p class="article__subtitle">{{ subtitle }}</p>{% endif %}
+      <p class="article__byline">
+        <span>{{ author }}</span>
+        <span aria-hidden="true">·</span>
+        {% if series %}<a href="{{ ('/series/' + (series | slug) + '/') | url }}">{{ series }}</a>{% else %}<a href="{{ ('/' + category + '/') | url }}">{{ category | categoryLabel }}</a>{% endif %}
+      </p>
+      <p class="article__meta">{{ date | formatDate }} · {{ content | readingTime }}</p>
+    </header>
+
+    {% if cover %}
+      <figure class="article__cover shell">
+        <img src="{{ cover | url }}" alt="{{ cover_alt or title }}" width="1400" height="840" loading="eager" />
+      </figure>
+    {% endif %}
+
+    <div class="article__body prose shell shell--reading">
+      {{ content | safe }}
+    </div>
+
+    <footer class="article__footer shell shell--reading">
+      <div class="article__taxonomy" aria-label="Clasificación del artículo">
+        <p><strong>Categoría:</strong> <a href="{{ ('/' + category + '/') | url }}">{{ category | categoryLabel }}</a></p>
+        {% if series %}<p><strong>Serie:</strong> <a href="{{ ('/series/' + (series | slug) + '/') | url }}">{{ series }}</a></p>{% endif %}
+      </div>
+
+      <p><a class="text-link" href="{{ ('/' + category + '/') | url }}">← Volver a {{ category | categoryLabel }}</a></p>
+
+      {% set previous = collections.posts | previousPost(page.url) %}
+      {% set next = collections.posts | nextPost(page.url) %}
+      {% if previous or next %}
+        <nav class="article-nav" aria-label="Navegación entre artículos">
+          {% if previous %}
+            <a href="{{ previous.url | url }}">
+              <span>Más reciente</span>
+              <strong>{{ previous.data.title }}</strong>
+            </a>
+          {% else %}<span></span>{% endif %}
+          {% if next %}
+            <a class="article-nav__next" href="{{ next.url | url }}">
+              <span>Anterior</span>
+              <strong>{{ next.data.title }}</strong>
+            </a>
+          {% endif %}
+        </nav>
+      {% endif %}
+
+      {% set related = collections.posts | relatedPosts(page.url, category) %}
+      {% if related.length %}
+        <section class="related" aria-labelledby="related-title">
+          <h2 id="related-title">También te puede interesar</h2>
+          <div class="related__grid">
+            {% for post in related %}
+              <a class="related__item" href="{{ post.url | url }}">
+                <span>{{ post.data.category | categoryLabel }}</span>
+                <strong>{{ post.data.title }}</strong>
+              </a>
+            {% endfor %}
+          </div>
+        </section>
+      {% endif %}
+
+      {% set shareUrl = page.url | absoluteUrl(site) %}
+      <section class="share" aria-labelledby="share-title">
+        <h2 id="share-title">Compartir</h2>
+        <div class="share__links">
+          <a href="https://x.com/intent/post?url={{ shareUrl | urlEncode }}&text={{ title | urlEncode }}" target="_blank" rel="noopener noreferrer">X</a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{ shareUrl | urlEncode }}" target="_blank" rel="noopener noreferrer">Facebook</a>
+          <a href="https://wa.me/?text={{ (title + ' — ' + shareUrl) | urlEncode }}" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <button type="button" class="copy-link" data-copy-url="{{ shareUrl }}">Copiar enlace</button>
+        </div>
+      </section>
+    </footer>
+  </article>
+{% endblock %}

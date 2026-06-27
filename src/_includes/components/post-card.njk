@@ -1,0 +1,15 @@
+<article class="post-card">
+  <a class="post-card__image" href="{{ post.url | url }}" aria-label="Leer {{ post.data.title }}">
+    {% if post.data.cover %}
+      <img src="{{ post.data.cover | url }}" alt="{{ post.data.cover_alt or post.data.title }}" width="760" height="430" loading="lazy" />
+    {% else %}
+      <span class="post-card__placeholder" aria-hidden="true"></span>
+    {% endif %}
+  </a>
+  <div class="post-card__content">
+    <p class="post-card__category">{{ post.data.category | categoryLabel }}</p>
+    <h2><a href="{{ post.url | url }}">{{ post.data.title }}</a></h2>
+    <p class="post-card__author">{{ post.data.author }}</p>
+    <p class="post-card__meta">{{ post.data.date | formatDate }} · {{ post.templateContent | readingTime }}</p>
+  </div>
+</article>
